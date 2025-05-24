@@ -35,3 +35,16 @@ ITEM_PIPELINES = {
     "ICP_UAE.pipelines.JsonWriterPipeline": 1,
 }
 AUTOTHROTTLE_ENABLED = True
+
+DOWNLOAD_HANDLERS = {
+    "http": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+    "https": "scrapy_playwright.handler.ScrapyPlaywrightDownloadHandler",
+}
+
+TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+
+PLAYWRIGHT_BROWSER_TYPE = "chromium"  # Or "firefox", "webkit" if preferred
+
+PLAYWRIGHT_LAUNCH_OPTIONS = {
+    "headless": False,  # Set to True to run in headless mode
+}
