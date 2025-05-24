@@ -76,7 +76,7 @@ class Icp_uaeSpider(scrapy.Spider):
     def parse(self, response):
         
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_1.csv'))
+        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_2.csv'))
 
         self.logger.info(f"Looking for CSV at: {csv_path}")
 
