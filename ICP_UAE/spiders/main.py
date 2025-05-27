@@ -74,9 +74,8 @@ class Icp_uaeSpider(scrapy.Spider):
     start_urls = ['https://www.example.com/']
 
     def parse(self, response):
-        
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_2.csv'))
+        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_4.csv'))
 
         self.logger.info(f"Looking for CSV at: {csv_path}")
 
@@ -156,9 +155,9 @@ class Icp_uaeSpider(scrapy.Spider):
             # print(date_of_birth)
             if 'Pakistani' in nationality.lower() or 'pak' in nationality.lower() or 'pakistan' in nationality.lower():
                 nationality = 'PAKISTAN'
-            if 'Indian' in nationality.capitalize() or 'ind' in nationality.lower():
+            if 'Indian' in nationality.capitalize() or 'ind' in nationality.lower() or 'india' in nationality.lower():
                 nationality = 'INDIA'
-            if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower():
+            if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower() or 'philippines' in nationality.lower():
                 nationality = 'PHILIPPINES'
             try:
                 emirates_id = int(emirates_id)
@@ -195,6 +194,7 @@ class Icp_uaeSpider(scrapy.Spider):
                     headers=request_headers,
                     json=request_json_data,
                 )
+                
                 pdf_output_dir = os.path.abspath(os.path.join(base_dir, '..', 'pdfs'))
                 os.makedirs(pdf_output_dir, exist_ok=True)
                 try:
@@ -208,6 +208,7 @@ class Icp_uaeSpider(scrapy.Spider):
                     print(e)
                     print(res.json())
                     print('=========================================================')
+                
                     
                 # break
                 # data = {
