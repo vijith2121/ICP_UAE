@@ -66,6 +66,20 @@ country_list = {
     'PAKISTAN': 24,
     'PHILIPPINES': 40,
 }
+user_agents = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "Mozilla/5.0 (X11; Linux x86_64)",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)",
+]
+
+# List of optional headers
+accept_languages = [
+    "en-US,en;q=0.9",
+    "en-GB,en;q=0.8",
+    "fr-FR,fr;q=0.9",
+]
+
 
 class Icp_uaeSpider(scrapy.Spider):
     name = "ICP_UAE"
@@ -76,7 +90,7 @@ class Icp_uaeSpider(scrapy.Spider):
 
     def parse(self, response):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_5.csv'))
+        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_2.csv'))
 
         self.logger.info(f"Looking for CSV at: {csv_path}")
 
@@ -89,7 +103,7 @@ class Icp_uaeSpider(scrapy.Spider):
         site_key = '6Lfj6nIUAAAAAD76VheUIK0jYhKYxJRdQF8eG7lh'
         headers = {
             'Accept': 'application/json, text/plain, */*',
-            'Accept-Language': 'en-US,en;q=0.9',
+            'Accept-Language': random.choice(accept_languages),
             'Connection': 'keep-alive',
             'Content-Type': 'application/json;charset=UTF-8',
             'Origin': 'https://smartservices.icp.gov.ae',
@@ -97,19 +111,17 @@ class Icp_uaeSpider(scrapy.Spider):
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+            'User-Agent': random.choice(user_agents),
             'languageId': '2',
-            'sec-ch-ua': '"Not.A/Brand";v="99", "Chromium";v="136"',
+            'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
             'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Linux"',
+            'sec-ch-ua-platform': '"Windows"',
             'skipCaptcha': 'true',
-            # 'Cookie': 'cookiesession1=678B28688263A39145FBA488EC2C60EC; fp=6796e327850f5b9c8c7697b0cfb34fdc; cookieAccepted=true',
+            # 'Cookie': 'cookiesession1=678B2868FE860D07E8ACFDC416D2B37E; _ga=GA1.1.678161290.1748430778; _ga_M6C5YXJWBX=GS2.1.s1748430777$o1$g0$t1748430777$j60$l0$h0; fp=e124e28212b628e128fae278e1c15719; cookieAccepted=true',
         }
-
         request_headers = {
             'Accept': 'application/json, text/plain, */*',
-            'Accept-Language': 'en-US,en;q=0.9',
-            'CURRENT_PORTAL': 'ICA',
+            'Accept-Language': random.choice(accept_languages),
             'Connection': 'keep-alive',
             'Content-Type': 'application/json;charset=UTF-8',
             'Origin': 'https://smartservices.icp.gov.ae',
@@ -117,13 +129,33 @@ class Icp_uaeSpider(scrapy.Spider):
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+            'User-Agent': random.choice(user_agents),
             'languageId': '2',
-            'sec-ch-ua': '"Not.A/Brand";v="99", "Chromium";v="136"',
+            'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
             'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"Linux"',
-            # 'Cookie': 'cookiesession1=678B28688263A39145FBA488EC2C60EC; fp=6796e327850f5b9c8c7697b0cfb34fdc; cookieAccepted=true',
+            'sec-ch-ua-platform': '"Windows"',
+            'skipCaptcha': 'true',
+            # 'Cookie': 'cookiesession1=678B2868FE860D07E8ACFDC416D2B37E; _ga=GA1.1.678161290.1748430778; _ga_M6C5YXJWBX=GS2.1.s1748430777$o1$g0$t1748430777$j60$l0$h0; fp=e124e28212b628e128fae278e1c15719; cookieAccepted=true',
         }
+
+        # request_headers = {
+        #     'Accept': 'application/json, text/plain, */*',
+        #     'Accept-Language': 'en-US,en;q=0.9',
+        #     'CURRENT_PORTAL': 'ICA',
+        #     'Connection': 'keep-alive',
+        #     'Content-Type': 'application/json;charset=UTF-8',
+        #     'Origin': 'https://smartservices.icp.gov.ae',
+        #     'Referer': 'https://smartservices.icp.gov.ae/echannels/web/client/default.html',
+        #     'Sec-Fetch-Dest': 'empty',
+        #     'Sec-Fetch-Mode': 'cors',
+        #     'Sec-Fetch-Site': 'same-origin',
+        #     'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36',
+        #     'languageId': '2',
+        #     'sec-ch-ua': '"Not.A/Brand";v="99", "Chromium";v="136"',
+        #     'sec-ch-ua-mobile': '?0',
+        #     'sec-ch-ua-platform': '"Linux"',
+        #     # 'Cookie': 'cookiesession1=678B28688263A39145FBA488EC2C60EC; fp=6796e327850f5b9c8c7697b0cfb34fdc; cookieAccepted=true',
+        # }
 
         request_json_data = {
             'requestNumber': '0101107642022023427186602',
@@ -133,13 +165,23 @@ class Icp_uaeSpider(scrapy.Spider):
         c = 0
         for i in df:
             c += 1
+            # pipl = i.get('pipl')
+            # json_data = chompjs.parse_js_object(pipl)
+            # customer_details = chompjs.parse_js_object(json_data.get('input_data'))
+            # name = customer_details.get('Name', '')
+            # nationality = customer_details.get('Nationality', '')
+            # emirates_id = customer_details.get('Emiratesid', '').replace('-', '').replace(' ', '').replace('/', '')
+            # date_of_birth = customer_details.get('Birth Date', '')
+            
+            
             pipl = i.get('pipl')
             json_data = chompjs.parse_js_object(pipl)
             customer_details = chompjs.parse_js_object(json_data.get('input_data'))
-            name = customer_details.get('Name', '')
-            nationality = customer_details.get('Nationality', '')
-            emirates_id = customer_details.get('Emiratesid', '').replace('-', '').replace(' ', '').replace('/', '')
-            date_of_birth = customer_details.get('Birth Date', '')
+            # print(customer_details)
+            name = customer_details.get('name', '')
+            nationality = customer_details.get('nationality', '')
+            emirates_id = str(customer_details.get('emirates_id', '')).replace('-', '').replace(' ', '').replace('.0', '')
+            date_of_birth = customer_details.get('date_of_birth', '')
             
             if '_DUPL' in emirates_id:
                 emirates_id = emirates_id.split('_DUPL_')[0].strip()
@@ -147,7 +189,8 @@ class Icp_uaeSpider(scrapy.Spider):
             if '00:' in date_of_birth:
                 date_of_birth = date_of_birth.split(' ')[0].strip()
             try:
-                date_obj = datetime.strptime(date_of_birth, "%Y-%m-%d")
+                # date_obj = datetime.strptime(date_of_birth, "%Y-%m-%d")
+                date_obj = datetime.strptime(str(date_of_birth), "%d-%b-%y")
                 formatted_date = date_obj.strftime("%Y/%m/%d")
             except Exception as error:
                 print(error)
@@ -160,15 +203,17 @@ class Icp_uaeSpider(scrapy.Spider):
                 nationality = 'INDIA'
             if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower() or 'philippines' in nationality.lower():
                 nationality = 'PHILIPPINES'
+
             try:
                 emirates_id = int(emirates_id)
             except Exception as error:
-                print(error)
+                print(error, '=====================================')
                 emirates_id = None
             national_id = country_list.get(nationality, '')
-            if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12) and (date_obj and len(str(date_obj))>3) and (nationality and len(nationality) > 2) and national_id:
-
-                # print('hi', emirates_id)
+            # print(emirates_id, national_id)
+            # if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12) and (date_obj and len(str(date_obj))>3) and (nationality and len(nationality) > 2) and national_id:
+            if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12):
+                print('hi', emirates_id)
                 #(isinstance(emirates_id, int) and emirates_id and len(str(emirates_id))>4) and (date_obj and len(str(date_obj))>3) and nationality
                 json_data = {
                     'requestDraftNumber': '784199988788123',
