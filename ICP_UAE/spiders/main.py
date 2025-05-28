@@ -138,7 +138,7 @@ class Icp_uaeSpider(scrapy.Spider):
             customer_details = chompjs.parse_js_object(json_data.get('input_data'))
             name = customer_details.get('Name', '')
             nationality = customer_details.get('Nationality', '')
-            emirates_id = customer_details.get('Emiratesid', '').replace('-', '').replace(' ', '')
+            emirates_id = customer_details.get('Emiratesid', '').replace('-', '').replace(' ', '').replace('/', '')
             date_of_birth = customer_details.get('Birth Date', '')
             
             if '_DUPL' in emirates_id:
