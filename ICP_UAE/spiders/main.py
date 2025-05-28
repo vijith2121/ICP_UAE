@@ -14,6 +14,7 @@ import requests
 import ast
 import pandas as pd
 import time
+import random
 
 
 url = 'https://smartservices.icp.gov.ae/echannels/web/client/default.html#/login'
@@ -197,11 +198,11 @@ class Icp_uaeSpider(scrapy.Spider):
                 date_obj = ''
             # 1999/04/24 .strftime("%d/%m/%Y")
             # print(date_of_birth)
-            if 'Pakistani' in nationality.lower() or 'pak' in nationality.lower() or 'pakistan' in nationality.lower():
+            if 'Pakistani' in nationality.lower() or 'pak' in nationality.lower() or 'pakistan' in nationality.lower() or 'PK' in nationality:
                 nationality = 'PAKISTAN'
-            if 'Indian' in nationality.capitalize() or 'ind' in nationality.lower() or 'india' in nationality.lower():
+            if 'Indian' in nationality.capitalize() or 'ind' in nationality.lower() or 'india' in nationality.lower() or 'IN' in nationality:
                 nationality = 'INDIA'
-            if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower() or 'philippines' in nationality.lower():
+            if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower() or 'philippines' in nationality.lower() or 'PH' in nationality:
                 nationality = 'PHILIPPINES'
 
             try:
@@ -210,9 +211,9 @@ class Icp_uaeSpider(scrapy.Spider):
                 print(error, '=====================================')
                 emirates_id = None
             national_id = country_list.get(nationality, '')
-            # print(emirates_id, national_id)
-            # if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12) and (date_obj and len(str(date_obj))>3) and (nationality and len(nationality) > 2) and national_id:
-            if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12):
+            print(emirates_id, national_id, nationality, formatted_date)
+            if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12) and (date_obj and len(str(date_obj))>3) and (nationality and len(nationality) > 2) and national_id:
+            # if (isinstance(emirates_id, int) and emirates_id and len(str(emirates_id)) > 12):
                 print('hi', emirates_id)
                 #(isinstance(emirates_id, int) and emirates_id and len(str(emirates_id))>4) and (date_obj and len(str(date_obj))>3) and nationality
                 json_data = {
