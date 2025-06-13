@@ -66,6 +66,10 @@ country_list = {
     'INDIA': 25,
     'PAKISTAN': 24,
     'PHILIPPINES': 40,
+    'EGYPT': 13,
+    'PORTUGAL': 117,
+    'SAUDI ARABIA': 2,
+    'SRI LANKA': 31
 }
 user_agents = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
@@ -91,7 +95,7 @@ class Icp_uaeSpider(scrapy.Spider):
 
     def parse(self, response):
         base_dir = os.path.dirname(os.path.abspath(__file__))
-        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'output_part_2.csv'))
+        csv_path = os.path.abspath(os.path.join(base_dir, '..', 'new_itms_ENBD New Accounts - June 2025.csv'))
 
         self.logger.info(f"Looking for CSV at: {csv_path}")
 
@@ -99,6 +103,8 @@ class Icp_uaeSpider(scrapy.Spider):
             self.logger.error(f"CSV file does not exist: {csv_path}")
             return
         df = pd.read_csv(csv_path).to_dict('records')
+        # print(df)
+        # return
 
         import chompjs
         site_key = '6Lfj6nIUAAAAAD76VheUIK0jYhKYxJRdQF8eG7lh'
@@ -166,6 +172,10 @@ class Icp_uaeSpider(scrapy.Spider):
         c = 0
         for i in df:
             c += 1
+            # print(i)
+            # return
+            # print(i)
+            # break
             # pipl = i.get('pipl')
             # json_data = chompjs.parse_js_object(pipl)
             # customer_details = chompjs.parse_js_object(json_data.get('input_data'))
@@ -175,15 +185,17 @@ class Icp_uaeSpider(scrapy.Spider):
             # date_of_birth = customer_details.get('Birth Date', '')
             
             
-            pipl = i.get('pipl')
-            json_data = chompjs.parse_js_object(pipl)
-            customer_details = chompjs.parse_js_object(json_data.get('input_data'))
+            # pipl = i.get('pipl')
+            # json_data = chompjs.parse_js_object(pipl)
+            # customer_details = chompjs.parse_js_object(json_data.get('input_data'))
+            # print(type(i))
+            customer_details = i
             # print(customer_details)
-            name = customer_details.get('name', '')
-            nationality = customer_details.get('nationality', '')
-            emirates_id = str(customer_details.get('emirates_id', '')).replace('-', '').replace(' ', '').replace('.0', '')
-            date_of_birth = customer_details.get('date_of_birth', '')
-            
+            name = customer_details.get('CUSTOMER NAME', '')
+            nationality = customer_details.get('CLEANED NATIONALITY', '')
+            emirates_id = str(customer_details.get('National ID no.', '')).replace('-', '').replace(' ', '').replace('.0', '')
+            date_of_birth = customer_details.get('CLEAN DOB', '')
+
             if '_DUPL' in emirates_id:
                 emirates_id = emirates_id.split('_DUPL_')[0].strip()
 
@@ -204,6 +216,14 @@ class Icp_uaeSpider(scrapy.Spider):
                 nationality = 'INDIA'
             if 'Filipino' in nationality.capitalize() or 'Philippines' in nationality.lower() or 'philippines' in nationality.lower() or 'PH' in nationality:
                 nationality = 'PHILIPPINES'
+            if 'EGYPT' in nationality.capitalize() or 'EGYPT' in nationality.lower() or 'EGYPT' in nationality.lower() or 'EGYPT' in nationality:
+                nationality = 'EGYPT'
+            if 'PORTUGAL' in nationality.capitalize() or 'PORTUGAL' in nationality.lower():
+                nationality = 'PORTUGAL'
+            if 'SAUDI ARABIA' in nationality.capitalize() or 'SAUDI ARABIA' in nationality.lower():
+                nationality = 'SAUDI ARABIA'
+            if 'SRI LANKA' in nationality.capitalize() or 'SRI LANKA' in nationality.lower():
+                nationality = 'SRI LANKA'
 
             try:
                 emirates_id = int(emirates_id)
